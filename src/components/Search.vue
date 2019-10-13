@@ -17,8 +17,8 @@
 
 
     <ul>
-      <li v-for="definition in definitions" :key="word.hom">
-        <p>{{ word.shortdef[0] }}</p>
+      <li v-for="definition in definitions" :key="word">
+        <p>{{ definition }}</p>
       </li>
     </ul>
 
@@ -33,24 +33,28 @@ export default {
   name: 'Search',
   data() {
     return {
-      words: []
+      words: [],
+      definitions: []
     }
   },
   methods: {
     getWords(letters) {
-      this.words = wordsApi.getWords(letters);
-      this.accessDefinitions();
+      this.words = wordsApi.getWords(letters)
+      // this.accessDefinitions();
     },
     submitLetters() {
-      let userLetters = this.lettersInput.split("");
+      let userLetters = this.lettersInput.toUpperCase().split("");
       this.getWords(userLetters);
     },
-    accessDefinitions(word) {
-      definitionsApi.getDefinitions(word)
-        .then(definitions => {
-          console.log(definitions);
-        })
-        .catch(error => error.log(error))
+    accessDefinitions() {
+      for (let word of this.words) {
+        definitionsApi.getDefinitions(word)
+          .then(definition => {
+            console.log(definition[0].shortdef);
+            this.definitions.push(definition[0].shortdef[0]);
+          })
+          .catch(error => console.error(error))
+      }
     }
   }
 }
