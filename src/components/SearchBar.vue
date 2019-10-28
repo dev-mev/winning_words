@@ -1,8 +1,15 @@
 <template>
   <div>
     <form @submit.prevent="submitLetters" class="search-form">
-      <label for="lettersInput">Enter your letters </label>
-      <input v-model="lettersInput" id="lettersInput" required>
+      <div>
+        <input v-model="lettersInput" id="lettersInput" type="text" placeholder="Your letters" aria-label="Your letters">
+      </div>
+
+      <div class="sub-input-container">
+        <input v-model="includeLetters" id="includeLetters" class="sub-input" type="text" placeholder="Must include" aria-label="Must include">
+        <input v-model="excludeLetters" id="excludeLetters" class="sub-input" type="text" placeholder="Must exclude" aria-label="Must exclude">
+      </div>
+
       <button type="submit">Submit</button>
     </form>
 
@@ -12,7 +19,7 @@
 
 <script>
 import SearchResults from "@/components/SearchResults.vue";
-import wordsApi from "@/services/api/wordsApi";
+import {getWords} from "@/services/api/wordsApi"
 
 export default {
   name: 'SearchBar',
@@ -22,17 +29,20 @@ export default {
   data() {
     return {
       lettersInput: "",
+      excludeLetters: "",
+      includeLetters: "",
       words: []
     }
   },
   methods: {
     submitLetters() {
-      console.log("Letters: " + this.lettersInput);
-      let userLetters = this.lettersInput.toUpperCase().split("");
-      this.getWords(userLetters);
+      let userLetters = this.lettersInput.toUpperCase().replace(/\s/g, "").split("");
+      let exclude = this.excludeLetters.toUpperCase().replace(/\s/g, "").split("");
+      let include = this.includeLetters.toUpperCase().replace(/\s/g, "").split("");
+      this.wordsApiCall(userLetters, exclude, include);
     },
-    getWords(letters) {
-      this.words = wordsApi.getWords(letters)
+    wordsApiCall(letters, exclude, include) {
+      this.words = JSON.parse(JSON.stringify(getWords(letters, exclude, include)))
     },
   }
 }
@@ -43,5 +53,51 @@ export default {
   text-align: center;
   color: white;
   margin-bottom: 1rem;
+}
+
+input[type="text"] {
+  height: 2.75rem;
+  width: 100%;
+  margin-bottom: .5rem;
+  background-color: #A29DB2;
+  border: none;
+  border-radius: .25rem;
+  font-size: 16px;
+}
+
+::-webkit-input-placeholder {
+  color: #373055;
+}
+
+:-ms-input-placeholder {
+  color: #373055;
+}
+
+::placeholder {
+  color: #373055;
+}
+
+.sub-input-container {
+  display: flex;
+  justify-content: space-between;
+}
+
+.sub-input {
+  padding-left: .75rem;
+}
+
+#excludeLetters {
+  margin-left: .5rem;
+}
+
+button {
+  float: right;
+  height: 2rem;
+  width: 5rem;
+  background-color: #3DB57F;
+}
+
+button:hover {
+  opacity: .75;
 }
 </style>

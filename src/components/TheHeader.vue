@@ -11,4 +11,8 @@
   background-color: #9D2FA2;
   color: #ffffff;
 }
+
+.banner h1 {
+  text-align: center;
+}
 </style>

@@ -2,23 +2,26 @@
   <div class="search-results-container">
     <button
       class="search-result-button"
-      v-for="word in words"
-      :key="word"
+      v-for="word in wordObjects"
+      :key="word.word"
       v-bind:class="{
-        'active-word': activeWord === word
+        'active-word': activeWord === word.word
       }"
       v-on:click="accessDefinitions(word)"
     >
-      <div class="search-result">{{ word }}</div>
-        <div v-show="activeWord === word">
-          <p class="definition">{{ currentDefinition }}</p>
-        </div>
+      <div class="search-result">{{ word.word }}</div>
+        <transition name="popover">
+          <div class="definition-div" v-if="activeWord === word.word">
+            <p class="definition">{{ def }}</p>
+          </div>
+        </transition>
     </button>
   </div>
 </template>
 
 <script>
 import definitionsApi from "@/services/api/definitionsApi";
+import Vue from 'vue'
 
 export default {
   name: "SearchResults",
@@ -28,26 +31,41 @@ export default {
   data() {
     return {
       activeWord: "",
-      currentDefinition: ""
+      show: true,
+      def:""
     }
+  },
+  computed: {
+    wordObjects() {
+      return this.words;
+    },
   },
   methods: {
     accessDefinitions(searchWord) {
-      this.activeWord = searchWord
+      let self = this;
+      this.activeWord = searchWord.word;
 
-      definitionsApi.getDefinitions(searchWord)
-        .then(definition => {
-          console.log(definition);
-          // let definitionObject = {"word": searchWord, "definition": definition};
-          this.currentDefinition = definition;
-        })
-        .catch(error => console.error(error))
+      if (searchWord.definition) {
+        self.def = searchWord.definition;
+      } else {
+        definitionsApi.getDefinitions(searchWord.word)
+          .then(thisDefinition => {
+            searchWord.definition = thisDefinition;
+            self.def = searchWord.definition;
+          })
+          .catch(error => console.error(error));
+      }
     }
   }
 }
 </script>
 
 <style scoped>
+.search-results-container {
+  display: flex;
+  flex-direction: column;
+}
+
 .search-result-button {
   width: 100%;
   border: none;
@@ -63,10 +81,31 @@ export default {
   margin: 1px 0;
   text-align: center;
   padding-top: 10px;
+  justify-content: center;
+}
+
+.popover-enter,
+.popover-leave-to {
+  opacity: 0;
+  transform: rotateY(50deg);
+}
+.popover-enter-to,
+.popover-leave {
+  opacity: 1;
+  transform: rotateY(0deg);
+}
+.popover-enter-active,
+.popover-leave-active {
+  transition: opacity, transform 200ms ease-out;
+  transition-timing-function: cubic-bezier(0.61,-0.19, 0.7,-0.11);
 }
 
 .search-result:focus {
-  outline-color: #3DB57F;
+  outline-color: none;
+}
+
+.definition-div {
+
 }
 
 .definition {
@@ -75,5 +114,6 @@ export default {
   color: #A29DB2;
   margin: 1px;
   text-align: left;
+  padding: 20px;
 }
 </style>

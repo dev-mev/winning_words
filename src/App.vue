@@ -20,9 +20,8 @@ export default {
 
 <style>
 body {
-  max-width: 500px;
   background-color: #373055;
-  margin: 0 auto;
+  margin: 0;
   font-family: sans-serif;
 }
 </style>
