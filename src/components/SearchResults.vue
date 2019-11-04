@@ -20,8 +20,8 @@
 </template>
 
 <script>
-import definitionsApi from "@/services/api/definitionsApi";
-import Vue from 'vue'
+import Vue from "vue";
+import returnDefinitions from "@/services/api/returnDefinitions";
 
 export default {
   name: "SearchResults",
@@ -32,32 +32,31 @@ export default {
     return {
       activeWord: "",
       show: true,
-      def:""
-    }
+      def: ""
+    };
   },
   computed: {
     wordObjects() {
       return this.words;
-    },
+    }
   },
   methods: {
     accessDefinitions(searchWord) {
-      let self = this;
+      const self = this;
       this.activeWord = searchWord.word;
 
       if (searchWord.definition) {
         self.def = searchWord.definition;
       } else {
-        definitionsApi.getDefinitions(searchWord.word)
-          .then(thisDefinition => {
+        returnDefinitions.getDefinitions(searchWord.word)
+          .then((thisDefinition) => {
             searchWord.definition = thisDefinition;
             self.def = searchWord.definition;
-          })
-          .catch(error => console.error(error));
+          });
       }
     }
   }
-}
+};
 </script>
 
 <style scoped>
@@ -102,10 +101,6 @@ export default {
 
 .search-result:focus {
   outline-color: none;
-}
-
-.definition-div {
-
 }
 
 .definition {

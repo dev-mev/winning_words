@@ -1,18 +1,15 @@
-var fs = require('fs');
+const fs = require("fs");
 
-fs.readFile("./wordList.txt", "utf8", function(err, data) {
+fs.readFile("./wordList.txt", "utf8", function (err, data) {
   if (err) throw err;
-  let words = data.split("\r\n");
-  let dictionary = new Array();
+  const words = data.split("\r\n");
+  const dictionary = new Array();
 
   for (let i = 0; i < words.length; i++) {
     dictionary[i] = words[i];
   }
 
   fs.writeFile("./wordDictionary.json", JSON.stringify(dictionary), (err) => {
-      if (err) throw err;
-  })
-   //console.log(dictionary);
-})
-
-
+    if (err) throw err;
+  });
+});

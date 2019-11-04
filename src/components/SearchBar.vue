@@ -2,12 +2,26 @@
   <div>
     <form @submit.prevent="submitLetters" class="search-form">
       <div>
-        <input v-model="lettersInput" id="lettersInput" type="text" placeholder="Your letters" aria-label="Your letters">
+        <input
+          v-model="lettersInput"
+          type="text"
+          placeholder="  Your letters"
+          aria-label="Optional letters">
       </div>
 
       <div class="sub-input-container">
-        <input v-model="includeLetters" id="includeLetters" class="sub-input" type="text" placeholder="Must include" aria-label="Must include">
-        <input v-model="excludeLetters" id="excludeLetters" class="sub-input" type="text" placeholder="Must exclude" aria-label="Must exclude">
+        <input
+          v-model="includeLetters"
+          class="sub-input"
+          type="text"
+          placeholder="Must include"
+          aria-label="Must include">
+        <input
+          v-model="excludeLetters"
+          class="exclude-letters sub-input"
+          type="text"
+          placeholder="Must exclude"
+          aria-label="Must exclude">
       </div>
 
       <button type="submit">Submit</button>
@@ -19,10 +33,10 @@
 
 <script>
 import SearchResults from "@/components/SearchResults.vue";
-import {getWords} from "@/services/api/wordsApi"
+import { getWords } from "@/services/api/returnWords";
 
 export default {
-  name: 'SearchBar',
+  name: "SearchBar",
   components: {
     SearchResults
   },
@@ -32,27 +46,27 @@ export default {
       excludeLetters: "",
       includeLetters: "",
       words: []
-    }
+    };
   },
   methods: {
     submitLetters() {
-      let userLetters = this.lettersInput.toUpperCase().replace(/\s/g, "").split("");
-      let exclude = this.excludeLetters.toUpperCase().replace(/\s/g, "").split("");
-      let include = this.includeLetters.toUpperCase().replace(/\s/g, "").split("");
-      this.wordsApiCall(userLetters, exclude, include);
+      const userLetters = this.prepareLetters(this.lettersInput);
+      const exclude = this.prepareLetters(this.excludeLetters);
+      const include = this.prepareLetters(this.includeLetters);
+      this.words = getWords(userLetters, exclude, include);
     },
-    wordsApiCall(letters, exclude, include) {
-      this.words = JSON.parse(JSON.stringify(getWords(letters, exclude, include)))
-    },
+    prepareLetters(letters) {
+      return letters.toUpperCase().replace(/\s/g, "").split("");
+    }
   }
-}
+};
 </script>
 
 <style scoped>
 .search-form {
   text-align: center;
   color: white;
-  margin-bottom: 1rem;
+  margin-bottom: 2.5rem;
 }
 
 input[type="text"] {
@@ -86,7 +100,7 @@ input[type="text"] {
   padding-left: .75rem;
 }
 
-#excludeLetters {
+.exclude-letters {
   margin-left: .5rem;
 }
 

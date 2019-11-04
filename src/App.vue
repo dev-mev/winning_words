@@ -6,16 +6,16 @@
 </template>
 
 <script>
-import Search from './components/SearchContainer.vue'
-import TheHeader from "./components/TheHeader"
+import Search from "./components/SearchContainer.vue";
+import TheHeader from "./components/TheHeader.vue";
 
 export default {
-  name: 'app',
+  name: "app",
   components: {
     Search,
     TheHeader
   }
-}
+};
 </script>
 
 <style>
