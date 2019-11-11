@@ -5,14 +5,14 @@
 </template>
 
 <script>
-import SearchBar from "@/components/SearchBar.vue";
+import SearchBar from "./SearchBar.vue";
 
 export default {
   name: "Search",
   components: {
     SearchBar
   }
-}
+};
 </script>
 
 <style>

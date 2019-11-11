@@ -1,4 +1,5 @@
-# vue-test-project
+# Winning Words
+Winning Words is a word and definition lookup tool for word games such as Letterpress. It was built using Vue on the frontend with a Node.js/Express server. A JSON word dictionary is included in the project and it uses an Express service to handle requests for word definitions.
 
 ## Project setup
 ```
@@ -20,5 +21,8 @@ npm run build
 npm run lint
 ```
 
-### Customize configuration
-See [Configuration Reference](https://cli.vuejs.org/config/).
+## Credit
+[Merriam-Webster API](https://dictionaryapi.com/)
+
+[SOWPODS word list](https://raw.githubusercontent.com/jmlewis/valett/master/scrabble/sowpods.txt)
+

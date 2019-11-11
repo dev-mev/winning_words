@@ -5,7 +5,7 @@
         <input
           v-model="lettersInput"
           type="text"
-          placeholder="  Your letters"
+          placeholder="Your letters"
           aria-label="Optional letters">
       </div>
 
@@ -27,13 +27,30 @@
       <button type="submit">Submit</button>
     </form>
 
-    <SearchResults :words="words"/>
+    <div
+      class="no-words"
+      v-if="words === null"
+    >
+    </div>
+
+    <SearchResults
+      :words="words"
+      v-else-if="words.length > 1"
+    />
+
+    <p
+      class="no-words"
+      v-else-if="words.length < 1"
+    >
+      No matching words.
+    </p>
+
   </div>
 </template>
 
 <script>
-import SearchResults from "@/components/SearchResults.vue";
-import { getWords } from "@/services/api/returnWords";
+import SearchResults from "./SearchResults.vue";
+import { getWords } from "../services/words";
 
 export default {
   name: "SearchBar",
@@ -45,7 +62,7 @@ export default {
       lettersInput: "",
       excludeLetters: "",
       includeLetters: "",
-      words: []
+      words: null
     };
   },
   methods: {
@@ -72,11 +89,15 @@ export default {
 input[type="text"] {
   height: 2.75rem;
   width: 100%;
+  -webkit-box-sizing: border-box;
+  -moz-box-sizing: border-box;
+  box-sizing: border-box;
   margin-bottom: .5rem;
   background-color: #A29DB2;
   border: none;
   border-radius: .25rem;
   font-size: 16px;
+  padding-left: .75rem;
 }
 
 ::-webkit-input-placeholder {
@@ -96,10 +117,6 @@ input[type="text"] {
   justify-content: space-between;
 }
 
-.sub-input {
-  padding-left: .75rem;
-}
-
 .exclude-letters {
   margin-left: .5rem;
 }
@@ -113,5 +130,9 @@ button {
 
 button:hover {
   opacity: .75;
+}
+
+.no-words {
+  color: white;
 }
 </style>

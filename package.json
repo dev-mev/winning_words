@@ -3,15 +3,17 @@
   "version": "0.1.0",
   "private": true,
   "scripts": {
-    "serve": "vue-cli-service serve",
+    "serve": "vue-cli-service serve --hot",
     "build": "vue-cli-service build",
     "lint": "vue-cli-service lint",
     "test:unit": "vue-cli-service test:unit"
   },
   "dependencies": {
     "axios": "^0.19.0",
+    "body-parser": "^1.19.0",
     "core-js": "^2.6.5",
     "dotenv": "^8.1.0",
+    "express": "^4.17.1",
     "vue": "^2.6.10"
   },
   "devDependencies": {
@@ -29,37 +31,6 @@
     "eslint-plugin-react": "^7.16.0",
     "eslint-plugin-vue": "^5.2.3",
     "vue-template-compiler": "^2.6.10"
-  },
-  "eslintConfig": {
-    "root": true,
-    "env": {
-      "node": true
-    },
-    "extends": [
-      "plugin:vue/essential",
-      "eslint-config-airbnb"
-    ],
-    "rules": {
-      "comma-dangle": [ "error", "never" ],
-      "func-names": "off",
-      "indent": ["error", 2],
-      "linebreak-style": "off",
-      "max-len": [ "error", 120 ],
-      "no-console": "off",
-      "no-new": "off",
-      "no-plusplus": "off",
-      "no-restricted-syntax": "off",
-      "prefer-arrow-callback": "off",
-      "prefer-destructuring": "off",
-      "prefer-template": "off",
-      "quotes": ["error", "double"],
-      "radix": "off",
-      "react/jsx-filename-extension": [1, { "extensions": [".js", ".jsx"] }],
-      "vars-on-top": "off"
-    },
-    "parserOptions": {
-      "parser": "babel-eslint"
-    }
   },
   "postcss": {
     "plugins": {
