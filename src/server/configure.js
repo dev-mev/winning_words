@@ -1,5 +1,5 @@
 const bodyParser = require("body-parser");
-const api = require("./API/api");
+const api = require("./api/word");
 
 module.exports = (app) => {
   app.use(bodyParser.json());

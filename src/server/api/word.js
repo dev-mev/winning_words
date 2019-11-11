@@ -1,9 +1,10 @@
 const axios = require("axios");
 const express = require("express");
 
+require("dotenv").config();
+
 const router = express.Router();
 
-// define the home page route
 router.get("/word/:word", (req, res) => {
   const baseUrl = "https://www.dictionaryapi.com/api/v3/references/collegiate/json/";
   axios.get(`${baseUrl}${encodeURIComponent(req.params.word)}?key=${process.env.API_KEY}`)
