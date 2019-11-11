@@ -14,5 +14,6 @@
 
 .banner h1 {
   text-align: center;
+  font-family: serif;
 }
 </style>

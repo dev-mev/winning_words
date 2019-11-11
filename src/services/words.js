@@ -84,6 +84,6 @@ export function getWords(letters, exclude, include) {
   matchingWords.sort((a, b) => computeScore(b.word, letters) - computeScore(a.word, letters));
 
   // return first thousand results
-  const maxResults = 1000;
+  const maxResults = 200;
   return matchingWords.slice(0, maxResults || 500);
 }

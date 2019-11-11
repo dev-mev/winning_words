@@ -23,5 +23,6 @@ body {
   background-color: #373055;
   margin: 0;
   font-family: sans-serif;
+  font-size: 15px;
 }
 </style>

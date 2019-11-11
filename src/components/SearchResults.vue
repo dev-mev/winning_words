@@ -26,5 +26,6 @@ export default {
 .search-results-container {
   display: flex;
   flex-direction: column;
+  margin-top: 3.5rem;
 }
 </style>

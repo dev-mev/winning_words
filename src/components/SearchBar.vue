@@ -123,9 +123,12 @@ input[type="text"] {
 
 button {
   float: right;
-  height: 2rem;
+  height: 2.5rem;
   width: 5rem;
+  font-size: 16px;
+  border-radius: .25rem;
   background-color: #3DB57F;
+  margin: .25rem;
 }
 
 button:hover {
