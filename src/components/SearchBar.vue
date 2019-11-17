@@ -1,27 +1,32 @@
 <template>
   <div>
-    <form @submit.prevent="submitLetters" class="search-form">
-      <div>
+    <form @submit.prevent="submitLetters" class="search-form float-top">
+      <div class="label-style">
         <input
+        id="letters-input"
           v-model="lettersInput"
           type="text"
-          placeholder="Your letters"
           aria-label="Optional letters">
+        <label class="label-text" for="letters-input">Your letters</label>
       </div>
 
       <div class="sub-input-container">
-        <input
-          v-model="includeLetters"
-          class="sub-input"
-          type="text"
-          placeholder="Must include"
-          aria-label="Must include">
-        <input
-          v-model="excludeLetters"
-          class="exclude-letters sub-input"
-          type="text"
-          placeholder="Must exclude"
-          aria-label="Must exclude">
+        <div class="label-style">
+          <input
+            v-model="includeLetters"
+            class="sub-input"
+            type="text"
+            aria-label="Must include">
+          <label class="label-text">Must include</label>
+        </div>
+        <div class="label-style">
+          <input
+            v-model="excludeLetters"
+            class="exclude-letters sub-input"
+            type="text"
+            aria-label="Must exclude">
+          <label class="label-text">Must exclude</label>
+        </div>
       </div>
 
       <button type="submit">Submit</button>
@@ -87,29 +92,17 @@ export default {
 }
 
 input[type="text"] {
-  height: 2.75rem;
+  height: 3.5rem;
   width: 100%;
   -webkit-box-sizing: border-box;
   -moz-box-sizing: border-box;
   box-sizing: border-box;
-  margin-bottom: .5rem;
   background-color: #A29DB2;
   border: none;
   border-radius: .25rem;
   font-size: 16px;
   padding-left: .75rem;
-}
-
-::-webkit-input-placeholder {
-  color: #373055;
-}
-
-:-ms-input-placeholder {
-  color: #373055;
-}
-
-::placeholder {
-  color: #373055;
+  padding-top: 1rem;
 }
 
 .sub-input-container {
@@ -117,8 +110,50 @@ input[type="text"] {
   justify-content: space-between;
 }
 
-.exclude-letters {
-  margin-left: .5rem;
+.sub-input-container div {
+  width: 48%;
+}
+
+.no-words {
+  color: white;
+}
+
+.label-style {
+  position: relative;
+  margin: 0px 0px 20px 0px;
+  -webkit-touch-callout: none;
+  -webkit-user-select: none;
+  -khtml-user-select: none;
+  -moz-user-select: none;
+  -ms-user-select: none;
+  user-select: none;
+}
+
+.label-text {
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  left: 0;
+  padding: 10px;
+  font-size: 16px;
+  width: 100%;
+  color: #373055;
+  transition: 0.2s;
+  z-index: 1;
+}
+
+/* float label*/
+form.float-top input:empty + label
+  {
+  bottom: 100%;
+  left: 10px;
+  top: 5px;
+  margin-bottom: -16px;
+  font-size: 14px;
+  line-height: 17px;
+  color: #373055;
+  text-align: left;
+  padding: 0;
 }
 
 button {
@@ -133,9 +168,5 @@ button {
 
 button:hover {
   opacity: .75;
-}
-
-.no-words {
-  color: white;
 }
 </style>
