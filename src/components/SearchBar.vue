@@ -146,6 +146,7 @@ input[type="text"] {
 form.float-top input:empty + label
   {
   bottom: 100%;
+  width: 90%;
   left: 10px;
   top: 5px;
   margin-bottom: -16px;
